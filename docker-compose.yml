@@ -1,0 +1,62 @@
+# Set docker-compose version
+version: '3'
+#volumes:
+#  mysql_data: {}
+      # - ELASTICSEARCH_URL= elasticsearch:9200
+networks:
+  postgres_db_networks:
+    external: true
+services:
+  rails_dev:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+      - "7658:7658"
+    # command: bash -c "rm -f tmp/pids/server.pid && rm -f /usr/local/var/postgres/postmaster.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ~/Project:/Project
+      - ~/.ssh:/root/.ssh
+    environment:
+      - PGHOST=postgresql
+      - PGUSER=postgres
+      # - ELASTICSEARCH_URL= elasticsearch:9200
+    networks:
+      - postgres_db_networks
+
+  solar:
+    build: .
+    image: sourcegraph/codeintel-ruby
+    command: 'bundle exec solargraph socket --host=0.0.0.0 --port=7658'
+    working_dir: /Project
+    volumes:
+      - ~/Project:/Project
+    ports:
+      - "7658:7658"
+        #depends_on:
+        #  - rails_dev
+    links:
+      - rails_dev
+# Docker Windows for postgresql
+# volumes:
+#   data-postgresql:
+#     external: true
+
+#   elasticsearch:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+#     environment:
+#       - cluster.name=docker-cluster
+#       - bootstrap.memory_lock=true
+#       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#     volumes:
+#       - ./docker_data/elasticsearch/data:/usr/share/elasticsearch/data
+#     ports:
+#       - 9200:9200
+#
+#
+# # Environment variables that allow my app to find other services
+#     environment:
+#       REDISTOGO_URL: "redis://redis:6379"
+#       POSTGRES_USER: postgres
+#       POSTGRES_HOST: db
+#       ELASTICSEARCH_URL: "http://elasticsearch:9200"
