@@ -18,5 +18,6 @@ WORKDIR /Project
 #
 #EXPOSE $PORT
 
+RUN echo 'alias run="rm -f tmp/pids/server.pid && rm -f /usr/local/var/postgres/postmaster.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"' >> /root/.bashrc
 
 ENTRYPOINT ["/bin/bash"]

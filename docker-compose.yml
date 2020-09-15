@@ -17,6 +17,7 @@ services:
     volumes:
       - ~/Project:/Project
       - ~/.ssh:/root/.ssh
+      - ~/.bash_profile:/root/.bash_profile
     environment:
       - PGHOST=postgresql
       - PGUSER=postgres
@@ -24,19 +25,19 @@ services:
     networks:
       - postgres_db_networks
 
-  solar:
-    build: .
-    image: sourcegraph/codeintel-ruby
-    command: 'bundle exec solargraph socket --host=0.0.0.0 --port=7658'
-    working_dir: /Project
-    volumes:
-      - ~/Project:/Project
-    ports:
-      - "7658:7658"
-        #depends_on:
-        #  - rails_dev
-    links:
-      - rails_dev
+#  solar:
+#    build: .
+#    image: sourcegraph/codeintel-ruby
+#    command: 'bundle exec solargraph socket --host=0.0.0.0 --port=7658'
+#    working_dir: /Project
+#    volumes:
+#      - ~/Project:/Project
+#    ports:
+#      - "7658:7658"
+#        #depends_on:
+#        #  - rails_dev
+#    links:
+#      - rails_dev
 # Docker Windows for postgresql
 # volumes:
 #   data-postgresql:
