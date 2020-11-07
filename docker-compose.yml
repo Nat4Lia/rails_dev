@@ -7,7 +7,7 @@ networks:
   postgres_db_networks:
     external: true
 services:
-  rails_dev:
+  rails6_dev:
     build:
       context: .
     ports:
