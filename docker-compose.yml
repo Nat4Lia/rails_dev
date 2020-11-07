@@ -7,7 +7,7 @@ networks:
   postgres_db_networks:
     external: true
 services:
-  rails_dev:
+  rails6_dev:
     build:
       context: .
     ports:
@@ -16,6 +16,8 @@ services:
     # command: bash -c "rm -f tmp/pids/server.pid && rm -f /usr/local/var/postgres/postmaster.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ~/Project:/Project
+      #Cahya PC Config
+      #- ~/../Cahya/OneDrive/Dokumen/Docker/hospital_management:/Project
       - ~/.ssh:/root/.ssh
       - ~/.bash_profile:/root/.bash_profile
     environment:
